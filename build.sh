@@ -3,19 +3,16 @@
 set -e
 
 # Initialize repo with specified manifest
- repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
+ repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 13 --depth=1
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/ProjectMatrixx/android.git -b 14.0 --git-lfs ;\
+repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 13 --depth=1 ;\
 
 # Clone local_manifests repository
-git clone https://github.com/Shirayuki39/treble_manifest.git .repo/local_manifests -b 14 ;\
-
-# Removals
-rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java && \
+manifest.xml .repo/local_manifests/aosp.xml ;\
 
 # Sync the repositories
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
@@ -24,14 +21,23 @@ bash patches/apply-patches.sh . && \
 
 # Set up build environment
 cd device/phh/treble
-bash generate.sh matrixx && \
+cp ../../../derp.mk . \
+bash generate.sh derp && \
+cd ../../..
 
 source build/envsetup.sh && \
+mkdir -p ./GSI
+
+# Build TrebleApp
+cd treble_app
+bash build.sh release
+cp TrebleApp.apk ../vendor/hardware_overlay/TrebleApp/app.apk
 
 # Lunch configuration
 lunch treble_arm64_bgN-userdebug ;\
 
 croot ;\
+make installclean -j$(nproc --all)
 make systemimage -j$(nproc --all) ; \
 echo "Date and time:" ; \
 
