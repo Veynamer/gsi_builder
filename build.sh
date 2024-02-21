@@ -10,10 +10,10 @@ crave set --projectID 72
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
-
+# repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 # Clone local_manifests repository
-git clone https://github.com/OkBuddyGSI/treble_manifest.git .repo/local_manifests -b 14 ;\
+git clone https://github.com/Veynamer/treble_manifest.git .repo/local_manifests -b 14 ;\
 
 # Removals
 rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java RisingOS_gsi patches device/phh/treble && \

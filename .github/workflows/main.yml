@@ -12,18 +12,18 @@ jobs:
     - name: Cleanup
       run: rm -rf *
     - name: Create workspace
-      run: mkdir gsi
+      run: mkdir lineage-gsi
       continue-on-error: true
     - name: Enter Workspace
-      run: cd gsi 
+      run: cd lineage-gsi 
       continue-on-error: true
       # Check-out in order to access the repository's files.
     - name: Check-out to repository
       uses: actions/checkout@v4    
     - name: Test Local Manifests
       run: |
-        repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
-        git clone https://github.com/OkBuddyGSI/treble_manifest.git --depth 1 -b 14 .repo/local_manifests && \
+        repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+        git clone https://github.com/Veynamer/treble_manifest.git --depth 1 -b 14 .repo/local_manifests && \
         timeout 1m repo sync --force-sync || { exit_code=$?; [ $exit_code -eq 124 ] || (echo "Error: Process failed with exit code $exit_code"; exit $exit_code); }
         rm -rf .repo
       timeout-minutes: 10    
@@ -39,9 +39,9 @@ jobs:
       run: crave stop --all
     - name: Find output file
       run: |
-        mv */system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
-        mv system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
-        xz -z -k RisingOS*.img
+        mv */system.img LineageOS-21-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
+        mv system.img LineageOS-21-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
+        xz -z -k LineageOS*.img
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
