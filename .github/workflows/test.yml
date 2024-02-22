@@ -23,6 +23,11 @@ jobs:
         echo "BUILD_HOSTNAME=crave" >> $GITHUB_ENV
         echo "BUILD_USERNAME=OkBuddyGSI" >> $GITHUB_ENV
 
+     - name: Install Repo tool
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y repo
+        
     - name: Run Script
       run: bash build.sh
 
