@@ -47,7 +47,7 @@ jobs:
       with:
         files: | 
           *.img.xz
-        name: LineageOS-21-Generic-${{ github.run_id }}
+        name: LineageOS-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
           Target: LineageOS-21-Generic
