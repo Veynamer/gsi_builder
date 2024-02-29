@@ -32,8 +32,8 @@ jobs:
       run: crave stop --all
     - name: Find output file
       run: |
-        mv */system.img LineageOS-21-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
-        mv system.img LineageOS-21-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
+        mv */system.img LineageOS-21-Generic-$(date +%Y%m%d)-VeynamerGSI-EXPERIMENTATIONS.img
+        mv system.img LineageOS-21-Generic-$(date +%Y%m%d)-VeynamerGSI-EXPERIMENTATIONS.img
         xz -z -k LineageOS*.img
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
