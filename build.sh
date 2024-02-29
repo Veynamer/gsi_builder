@@ -3,7 +3,7 @@
 set -e
 
 # Set Crave to build using LineageOS 21 as base
-repo init -u https://github.com/accupara/los21.git -b lineage-21.0 --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 crave set --projectID 1
 
 # Run inside foss.crave.io devspace, in the project folder
