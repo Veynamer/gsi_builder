@@ -4,7 +4,7 @@ set -e
 
 # Set Crave to build using LineageOS 21 as base
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-crave set --projectID 217
+crave set --projectID 72
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
