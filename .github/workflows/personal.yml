@@ -1,0 +1,44 @@
+name: Lineage OS GSI personal
+
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    name: Build GSIs using personal PC
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Cleanup
+      run: rm -rf *
+    - name: Create workspace
+      run: mkdir lineage-gsi
+      continue-on-error: true
+    - name: Enter Workspace
+      run: cd lineage-gsi 
+      continue-on-error: true
+      # Check-out in order to access the repository's files.
+    - name: Check-out to repository
+      uses: actions/checkout@v4    
+    - name: Run Script
+      run: bash build.sh
+      # Only reach this when the user killed the workflow.
+    - name: Execute if the job is cancelled
+      if: ${{ cancelled() }}
+      run: crave stop --all
+    - name: Find output file
+      run: |
+        mv */system.img LineageOS-21-Generic-$(date +%Y%m%d)-VeynamerGSI-EXPERIMENTATIONS.img
+        mv system.img LineageOS-21-Generic-$(date +%Y%m%d)-VeynamerGSI-EXPERIMENTATIONS.img
+        xz -z -k LineageOS*.img
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: | 
+          *.img.xz
+        name: LineageOS-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          Target: LineageOS-21-Generic
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
