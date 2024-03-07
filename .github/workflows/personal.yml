@@ -21,11 +21,8 @@ jobs:
     - name: Check-out to repository
       uses: actions/checkout@v4    
     - name: Run Script
-      run: bash build.sh
+      run: bash personalbuild.sh
       # Only reach this when the user killed the workflow.
-    - name: Execute if the job is cancelled
-      if: ${{ cancelled() }}
-      run: crave stop --all
     - name: Find output file
       run: |
         mv */system.img LineageOS-21-Generic-$(date +%Y%m%d)-VeynamerGSI-EXPERIMENTATIONS.img
