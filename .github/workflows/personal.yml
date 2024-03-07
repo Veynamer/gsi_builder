@@ -21,7 +21,7 @@ jobs:
     - name: Check-out to repository
       uses: actions/checkout@v4    
     - name: Run Script
-      run: bash personalbuild.sh
+      run: bash test.sh
       # Only reach this when the user killed the workflow.
     - name: Find output file
       run: |
